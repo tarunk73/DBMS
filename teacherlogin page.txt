@@ -1,0 +1,144 @@
+package studentsfeedbackform;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+
+public class show extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTable table;
+	private JButton btnNewButton;
+	private JLabel lblNewLabel;
+	private JTextField textField;
+	private Connection con;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					show frame = new show();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public show() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1122, 690);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(55, 56, 1002, 279);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null, null, null},
+			},
+			new String[] {
+				"Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10"
+			}
+		));
+		
+		btnNewButton = new JButton("show");
+		btnNewButton.setBounds(78, 25, 85, 21);
+		btnNewButton.addActionListener(new ActionListener() {
+			private Object connector;
+			private Connection con;
+			private String FNAME;
+
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/studentsfeedback","root","vivegaa@1234");
+					Statement st=con.createStatement();
+					String sql="select * from t1 where FNAME=?";
+					
+					PreparedStatement pts=con.prepareStatement(sql);
+					//PreparedStatement pts=con.prepareStatement(login.sq1);
+					pts.setString(1,textField.getText());
+					ResultSet rs= pts.executeQuery();
+					DefaultTableModel dt=(DefaultTableModel)table.getModel();
+					dt.setRowCount(0);
+					while(rs.next()) {
+					
+					Object o[]= {rs.getString("1"),rs.getString("2"),rs.getString("3"),rs.getString("4"),rs.getString("5"),rs.getString("6"),rs.getString("7"),rs.getString("8"),rs.getString("9"),rs.getString("10")};
+					dt.addRow(o);
+					}
+			}
+				catch(Exception ec) {
+					JOptionPane.showMessageDialog(btnNewButton,this,"no values",0);
+							
+					ec.printStackTrace();
+				}
+			}
+		});
+		contentPane.add(btnNewButton);
+		
+		lblNewLabel = new JLabel("Enter staff name");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel.setBounds(257, 29, 137, 13);
+		contentPane.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(404, 27, 152, 19);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\manda\\Downloads\\pic8 (1).jpg"));
+		lblNewLabel_1.setBounds(0, 0, 1098, 643);
+		contentPane.add(lblNewLabel_1);
+	}
+}

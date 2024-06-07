@@ -1,0 +1,139 @@
+package studentsfeedbackform;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+
+public class teacherslogin extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					teacherslogin frame = new teacherslogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public teacherslogin() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1029, 651);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("TEACHER'S LOGIN");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblNewLabel.setBounds(127, 22, 262, 30);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("USERNAME");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblNewLabel_1.setBounds(115, 154, 135, 25);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("PASSWORD");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 23));
+		lblNewLabel_2.setBounds(115, 247, 158, 30);
+		contentPane.add(lblNewLabel_2);
+		
+		textField = new JTextField();
+		textField.setBounds(445, 149, 301, 30);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(445, 233, 312, 30);
+		contentPane.add(textField_1);
+		
+		JButton btnNewButton = new JButton("LOGIN");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				try {
+					new show().setVisible(true);
+					SwingUtilities.windowForComponent(btnNewButton).dispose();
+				}
+				catch(Exception o) {
+					JOptionPane.showMessageDialog(btnNewButton,this,"Error while establishing connection failed",0);
+				}			
+			}
+			}
+		);
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 19));
+		btnNewButton.setBounds(61, 375, 143, 30);
+		contentPane.add(btnNewButton);
+		
+		JButton btnReset = new JButton("RESET");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnReset.setFont(new Font("Tahoma", Font.BOLD, 19));
+		btnReset.setBounds(518, 375, 143, 30);
+		contentPane.add(btnReset);
+		
+		JButton btnExit = new JButton("EXIT");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnExit.setFont(new Font("Tahoma", Font.BOLD, 19));
+		btnExit.setBounds(728, 375, 143, 30);
+		contentPane.add(btnExit);
+		
+		JButton btnSignIn = new JButton("SIGN IN");
+		btnSignIn.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				try {
+					new teacherlogin().setVisible(true);
+					SwingUtilities.windowForComponent(btnSignIn).dispose();
+				}
+				catch(Exception o) {
+					JOptionPane.showMessageDialog(btnSignIn,this,"Error while establishing connection failed",0);
+				}			
+			}
+			
+		});
+		btnSignIn.setFont(new Font("Tahoma", Font.BOLD, 19));
+		btnSignIn.setBounds(296, 375, 143, 30);
+		contentPane.add(btnSignIn);
+		
+		JLabel lblNewLabel_3 = new JLabel("New label");
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\manda\\Downloads\\tr.jpg"));
+		lblNewLabel_3.setBounds(0, 0, 1005, 614);
+		contentPane.add(lblNewLabel_3);
+	}
+}

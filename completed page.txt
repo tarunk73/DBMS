@@ -1,0 +1,142 @@
+package studentsfeedbackform;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+
+public class teacherlogin extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField newpass1;
+    private JTextField textField_2;
+    private JTextField newuser1;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    teacherlogin frame = new teacherlogin();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public teacherlogin() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 652, 387);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        
+        JLabel lblNewLabel = new JLabel("Username");
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblNewLabel.setBounds(35, 67, 141, 46);
+        contentPane.add(lblNewLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("Password");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblNewLabel_1.setBounds(35, 143, 128, 26);
+        contentPane.add(lblNewLabel_1);
+        
+        newpass1 = new JTextField();
+        newpass1.setBounds(264, 148, 215, 26);
+        contentPane.add(newpass1);
+        newpass1.setColumns(10);
+        
+        JButton btn = new JButton("SignUp");
+        btn.addActionListener(new ActionListener() 
+        {
+        	//private JLabel textField;
+			//String username=newuser1.getText();
+			//private JLabel textTield_1;
+        	//String password=newpass1.getText();
+        	//String confirmpassword=textField_2.getText();
+            //private String username11;
+			//private String password11;
+			//private String confirmpassword;
+			//private String password;
+			//private String username;
+        	//String username=newuser1.getText();
+        	//String password=newpass1.getText();
+        	//String confirmpassword=textField_2.getText();
+			public void actionPerformed(ActionEvent e) 
+            {
+				String username=newuser1.getText();
+	        	String password=newpass1.getText();
+	        	String confirmpassword=textField_2.getText();
+				try
+				{
+            	Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/studentsfeedback","root","vivegaa@1234");
+			    String query = "INSERT INTO fpassword VALUES (?,?,?)";
+			    PreparedStatement pst = con.prepareStatement(query);
+			    pst.setString(1, username);
+			    pst.setString(2,password);
+			    pst.setString(3,confirmpassword);
+			   
+			    
+			    
+			    int rowsAffected = pst.executeUpdate();
+			    if (rowsAffected > 0) {
+			        JOptionPane.showMessageDialog(null, "Account created");
+			        setVisible(false);
+			        new teacherslogin().setVisible(true);
+			    } else {
+			        JOptionPane.showMessageDialog(null, "account doen not created");
+			    }
+			    
+			    pst.close();
+			    con.close();
+			} catch (SQLException e1) {
+			    e1.printStackTrace();
+			}
+			    // Handle any SQL errors
+			}
+  			
+        });
+        btn.setFont(new Font("Tahoma", Font.BOLD, 20));
+        btn.setBounds(278, 290, 112, 37);
+        contentPane.add(btn);
+        
+        JLabel lblNewLabel_1_1 = new JLabel("Confirm password");
+        lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblNewLabel_1_1.setBounds(28, 221, 196, 26);
+        contentPane.add(lblNewLabel_1_1);
+        
+        textField_2 = new JTextField();
+        textField_2.setColumns(10);
+        textField_2.setBounds(264, 221, 215, 26);
+        contentPane.add(textField_2);
+        
+        newuser1 = new JTextField();
+        newuser1.setColumns(10);
+        newuser1.setBounds(264, 70, 215, 26);
+        contentPane.add(newuser1);
+    }
+}

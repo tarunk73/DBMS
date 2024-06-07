@@ -1,0 +1,162 @@
+package studentsfeedbackform;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+
+public class front0 extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField newuser;
+	private JTextField newpass;
+	private JTextField textField_2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					front0 frame = new front0();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public front0() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 628, 497);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("sign up");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 34));
+		lblNewLabel.setBounds(239, 55, 152, 34);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("REGISTER NO");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblNewLabel_1.setBounds(63, 121, 224, 40);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("PASSWORD");
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblNewLabel_1_1.setBounds(63, 190, 224, 40);
+		contentPane.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("CONFIRM PASSWORD");
+		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
+		lblNewLabel_1_1_1.setBounds(24, 270, 321, 40);
+		contentPane.add(lblNewLabel_1_1_1);
+		
+		newuser = new JTextField();
+		newuser.setBounds(346, 129, 245, 34);
+		contentPane.add(newuser);
+		newuser.setColumns(10);
+		
+		newpass = new JTextField();
+		newpass.setColumns(10);
+		newpass.setBounds(340, 198, 253, 34);
+		contentPane.add(newpass);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(340, 270, 253, 34);
+		contentPane.add(textField_2);
+		
+		JButton btnNewButton = new JButton("SIGN IN");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+               try{
+            	   
+            	   String us = newuser.getText();
+				
+				  String np = newpass.getText();
+				
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/studentsfeedback","root","vivegaa@1234");
+				System.out.println("1");
+				Statement st = con.createStatement();
+				String sql2 = "select count(*) as COUNT from access";
+				PreparedStatement ps2 = con.prepareStatement(sql2);
+				ResultSet res2 = ps2.executeQuery();
+				String sql = "SELECT * FROM access";
+				ResultSet res1 = st.executeQuery(sql);
+				int c = 0;
+				while(res2.next()) {
+					c = res2.getInt(1);
+					
+				}
+				c=c+2;
+				while(res1.next()) {
+					String use1 = res1.getString("username");
+					if(us!=use1) {
+						String sql3 = "insert into access values('"+us+"','"+np+"')";
+						PreparedStatement pts = con.prepareStatement(sql3);
+						pts.executeUpdate(sql3);
+						JOptionPane.showMessageDialog(null, "Successfully inserted");
+					
+					
+						try {
+							front newframe = new front();
+						    newframe.setVisible(true);
+							SwingUtilities.windowForComponent(btnNewButton).dispose();
+							
+						}
+						catch(Exception a)
+						{
+							JOptionPane.showMessageDialog(btnNewButton, this, "Error while establishing connection failed", 0);
+						}
+						
+					}
+					else {
+						newuser.setText("");
+						newpass.setText("");
+					}
+				}}
+					
+				
+				
+				catch(Exception r) {
+					//JOptionPane.showMessageDialog(null, "username exists");
+								}
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnNewButton.setBounds(212, 378, 114, 21);
+		contentPane.add(btnNewButton);
+		
+		JLabel lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\manda\\Downloads\\pics4 (1).jpg"));
+		lblNewLabel_2.setBounds(10, -14, 657, 494);
+		contentPane.add(lblNewLabel_2);
+	}
+}
